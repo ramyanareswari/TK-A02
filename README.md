@@ -1,4 +1,4 @@
-# Foody Buddy 🍔
+# Foody Buddy 🗑️🚮
 
 ## Tautan Aplikasi
 https://fooodybuddy.herokuapp.com/
@@ -12,22 +12,24 @@ Nikolas Reva Bellie - 2106750212<br/>
 Fauzil Ula Fachrudin - 2106702680<br/>
 Ramya Nareswari Wikantiyoso (2106751606)
 
-
 ## Cerita dan Manfaat Aplikasi
-Food waste app (tema: agriculture and food security)
+Tema: agriculture and food security
 
 ## Role Pengguna Aplikasi:
 ### User yang Tidak Login
-Dapat melihat modul:
-1. Homepage, faq
+1. Artikel Tips & Trick
+2. Data lembaga pengelola food waste
 ### User yang Login
-
+1. Profile & Tracker 
+2. Questionairre Awareness
+3. Send food waste
+4. Daily food diary
 
 ## Modul Implementasi:
-1. Home page, FAQ, dan Autentikasi (Signup, Login, Logout)
+1. Home page: FAQ, Autentikasi (Signup, Login, Logout), dan Contact Form
 2. Profile & Tracker
-3. Questionairre
+3. Questionairre Awareness
 4. Data Lembaga Pengelola Food Waste
-5. Tips & Trick
+5. Artikel Tips & Trick
 6. Send food waste
 7. Daily Food Diary
