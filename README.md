@@ -1,7 +1,7 @@
 # Foody Buddy 🍔
 
 ## Tautan Aplikasi
-
+https://fooodybuddy.herokuapp.com/
 
 ## Anggota Kelompok
 Ivan Rabbani Cezeliano - 2106701892<br/>
