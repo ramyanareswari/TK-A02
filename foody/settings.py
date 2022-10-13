@@ -11,7 +11,7 @@ PRODUCTION = os.getenv('DATABASE_URL') is not None
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-#l3(a6ydyl)!9#++v3@!=2q5d@s=rje#uafh(yb)pch%9qz6#&"
+SECRET_KEY = 'django-insecure-jcjxm^oldzlq8d$1o4dh-^$g7bwt0@h3%zx0=2zrr$*$x)jomd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
