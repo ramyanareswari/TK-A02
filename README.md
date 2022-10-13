@@ -1,6 +1,9 @@
-# TAUTAN APLIKASI
+# Foody Buddy 🍔
 
-## ANGGOTA KELOMPOK
+## Tautan Aplikasi
+
+
+## Anggota Kelompok
 Ivan Rabbani Cezeliano - 2106701892
 Vladi Jingga Mentari - 2106635631
 Qaniah Zahirah - 2106639491
@@ -14,9 +17,10 @@ Ramya Nareswari Wikantiyoso (2106751606)
 Food waste app (tema: agriculture and food security)
 
 ## Role Pengguna Aplikasi:
-User yang Tidak Login
-Homepage, faq
-User yang Login
+### User yang Tidak Login
+Dapat melihat modul:
+1. Homepage, faq
+### User yang Login
 
 
 ## Modul Implementasi:
