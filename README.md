@@ -4,12 +4,12 @@
 
 
 ## Anggota Kelompok
-Ivan Rabbani Cezeliano - 2106701892
-Vladi Jingga Mentari - 2106635631
-Qaniah Zahirah - 2106639491
-Shamira Alifanindya Prasetya - 2106636376
-Nikolas Reva Bellie - 2106750212
-Fauzil Ula Fachrudin - 2106702680
+Ivan Rabbani Cezeliano - 2106701892<br/>
+Vladi Jingga Mentari - 2106635631<br/>
+Qaniah Zahirah - 2106639491<br/>
+Shamira Alifanindya Prasetya - 2106636376<br/>
+Nikolas Reva Bellie - 2106750212<br/>
+Fauzil Ula Fachrudin - 2106702680<br/>
 Ramya Nareswari Wikantiyoso (2106751606)
 
 
