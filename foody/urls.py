@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls')),
     path('quiz/', include('miniquiz.urls')),
-
+    path('send_foodwaste/', include('send_foodwaste.urls')),
 ]
