@@ -42,13 +42,13 @@ def delete_food(request, id):
     if request.user.is_authenticated:
         foods = Food_Data.objects.get(user = request.user, id = id)
         foods.delete()
-        return JsonResponse(status = 200)
+        return redirect('expiry:show_expiry')
     else:
         return render(request, "expiry_public.html")
 
 def show_json(request):
     if request.user.is_authenticated:
-        foods = Food_Data.objects.filter(user = request.user).order_by('-food_expired_date')
+        foods = Food_Data.objects.filter(user = request.user).order_by('food_expired_date')
         return HttpResponse(serializers.serialize("json", foods), content_type="application/json")
     else:
         return render(request, "expiry_public.html")

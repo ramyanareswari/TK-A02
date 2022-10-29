@@ -10,71 +10,64 @@
     <title>Oops! You're not logged in!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     
-    <nav class="navbar" style="background-color: #d3e71f;">
-      <div class = "container-fluid">
-          <a class="navbar-brand" href="#" style="color: #fff;">
-            Hello? Who are you?
-          </a>
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
 
-          
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+      <a href="{% url 'homepage:show_homepage' %}" class="navbar-brand ms-4 ms-lg-0">
+        <h1 class="fw-bold text-primary m-0">F<span class="text-secondary">oo</span>dy</h1>
+      </a>
+      <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+          <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link">Home</a>
+          <a href="{% url 'miniquiz:quiz_main_page' %}" class="nav-item nav-link">Quiz</a>
+          <!-- <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link">Organization</a> -->
+          <!-- <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link">Diary</a> -->
+          <a href="{% url 'expiry:show_expiry' %}" class="nav-item nav-link">Tracker</a>
+          <a href="{% url 'send_foodwaste:show_send_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
+          <a href="{% url 'tips:show_article' %}" class="nav-item nav-link">Articles</a>
+          <button class="btn btn-primary" href="{% url 'homepage:login' %}">Login</button>
+
+        </div>
       </div>
     </nav>
-
-    <!-- Styling : https://codepen.io/lsgrrd/pen/BObbYY -->
-    <style>
-      @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-
-      html,body{
-        width: 100%;
-        height: 100%;
-        margin: 0;
-      }
-
-      *{
-        font-family: 'Press Start 2P', cursive;
-        box-sizing: border-box;
-      }
-
-      #error{
-        padding: 1rem;
-        background: black;
-        display: flex;
-        height: 100%;
-        justify-content: center; 
-        align-items: center;
-        color: #54FE55;
-        text-shadow: 0px 0px 10px;
-        font-size: 6rem;
-        flex-direction: column;
-      }
-
-      #error .txt {
-        font-size: 1.8rem;
-      }
-      
-      @keyframes blink {
-        0%   {opacity: 0}
-        49%  {opacity: 0}
-        50%  {opacity: 1}
-        100% {opacity: 1}
-      }
-
-      .blink {
-        animation-name: blink;
-        animation-duration: 1s;
-        animation-iteration-count: infinite;
-      }
-    </style>
+    <!-- Navbar End -->
 
   </head>
   <body>
 
-    <div id="error">
-      <div>ERROR!</div>
-      <div class="txt">
-         You're not yet logged in<span class="blink">_</span>
-      </div>
-   </div>
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <h1 class="display-3 mb-3 animated slideInDown">Error located!</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item text-dark active" aria-current="page">Beep boop, error!</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- 404 Start -->
+      <div class="container-xxl py-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
+                    <h1 class="display-1">-ERROR-</h1>
+                    <h1 class="mb-4">Not Logged In</h1>
+                    <p class="mb-4">We’re sorry, but the page you have looked for can only be unlocked if you're logged in! Maybe try to login by pressing the button on the top right corner of the page?</p>
+                    <a class="btn btn-primary rounded-pill py-3 px-5" href="">Go Back To Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 404 End -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   </body>
