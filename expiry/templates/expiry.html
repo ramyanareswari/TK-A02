@@ -10,41 +10,50 @@
     <title>Your Expiry Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
+    <nav class="navbar" style="background-color: #cede45;">
+      <div class = "container-fluid">
+          <a class="navbar-brand" href="#" style="color: #fff;">
+            Welcome back, {{ username }}
+          </a>
+
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Food
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Create Task</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Form -->
+                  <form method="POST" action="" id = "create_food_note">
+                    {% csrf_token %}
+            
+                    <label for="food_name">Food Name</label>
+                    <input id="food_name" type="text" name="food_name" placeholder="Food Name" class="form-control" required>
+            
+                    <label for="food_expired_date">Food Expired Date</label>
+                    <input id="food_expired_date" type="date" name="food_expired_date" placeholder="Description" class="form-control" required>
+
+                    <button id="submit_food_note" type="submit" class="btn btn-primary" value="submit">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a class="btn btn-danger" href="{% url 'homepage:logout' %}" role="button">Logout</a>
+      </div>
+    </nav>
 
   </head>
   <body>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Add Task
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Create Task</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Form -->
-            <form method="POST" action="" id = "create_food_note">
-              {% csrf_token %}
-      
-              <label for="food_name">Food Name</label>
-              <input id="food_name" type="text" name="food_name" placeholder="Food Name" class="form-control" required>
-      
-              <label for="food_expired_date">Food Expired Date</label>
-              <input id="food_expired_date" type="date" name="food_expired_date" placeholder="Description" class="form-control" required>
-
-              <button id="submit_food_note" type="submit" class="btn btn-primary" value="submit">Submit</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class = "container-md overflow-auto justify-content-center align-items-center" id="card_container">
 
     </div>

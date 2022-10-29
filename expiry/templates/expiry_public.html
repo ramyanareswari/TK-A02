@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Oops! You're not logged in!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    
+    <nav class="navbar" style="background-color: #d3e71f;">
+      <div class = "container-fluid">
+          <a class="navbar-brand" href="#" style="color: #fff;">
+            Hello? Who are you?
+          </a>
+
+          
+      </div>
+    </nav>
+
+    <!-- Styling : https://codepen.io/lsgrrd/pen/BObbYY -->
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+      html,body{
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      *{
+        font-family: 'Press Start 2P', cursive;
+        box-sizing: border-box;
+      }
+
+      #error{
+        padding: 1rem;
+        background: black;
+        display: flex;
+        height: 100%;
+        justify-content: center; 
+        align-items: center;
+        color: #54FE55;
+        text-shadow: 0px 0px 10px;
+        font-size: 6rem;
+        flex-direction: column;
+      }
+
+      #error .txt {
+        font-size: 1.8rem;
+      }
+      
+      @keyframes blink {
+        0%   {opacity: 0}
+        49%  {opacity: 0}
+        50%  {opacity: 1}
+        100% {opacity: 1}
+      }
+
+      .blink {
+        animation-name: blink;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div id="error">
+      <div>ERROR!</div>
+      <div class="txt">
+         You're not yet logged in<span class="blink">_</span>
+      </div>
+   </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+{% endblock content %}
