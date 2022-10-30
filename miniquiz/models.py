@@ -1,3 +1,4 @@
 from django.db import models
 
-# Create your models here.
+class miniQuiz(models.Model):
+    questions = models.CharField(max_length=100)
