@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('homepage.urls')),
     path('quiz/', include('miniquiz.urls')),
     path('articles/', include('tips.urls')),
+    path('expiry/', include('expiry.urls')),
 ]
 
 if settings.DEBUG:
