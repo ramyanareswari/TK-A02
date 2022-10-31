@@ -27,13 +27,8 @@
         <div class="navbar-nav ms-auto p-4 p-lg-0">
           <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link">Home</a>
           <a href="{% url 'miniquiz:quiz_main_page' %}" class="nav-item nav-link">Quiz</a>
-          <!-- <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link">Organization</a> -->
-          <a href="{% url 'diary:show_diary' %}" class="nav-item nav-link">Diary</a>
           <a href="{% url 'expiry:show_expiry' %}" class="nav-item nav-link">Tracker</a>
-          <a href="{% url 'send_foodwaste:show_send_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
-          <a href="{% url 'tips:show_article' %}" class="nav-item nav-link">Articles</a>
-          <button class="btn btn-danger" href="{% url 'homepage:logout' %}">Logout</button>
-
+          <button class="btn btn-danger"><a href="{% url 'homepage:logout' %}" style="color: #fff; text-decoration: none;">Logout</a></button>
         </div>
       </div>
     </nav>
@@ -51,16 +46,14 @@
     <!-- Page Header End -->
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill justify-content-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Add Food
-    </button>
+    
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Create Task</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Create Food Note</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -74,7 +67,7 @@
               <label for="food_expired_date">Food Expired Date</label>
               <input id="food_expired_date" type="date" name="food_expired_date" placeholder="Description" class="form-control" required>
 
-              <button id="submit_food_note" type="submit" class="btn btn-primary" value="submit">Submit</button>
+              <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
             </form>
           </div>
@@ -88,62 +81,67 @@
           <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
               <h1 class="display-5 mb-3">These are your food note.</h1>
               <p>By using this page, we hope that you can minimalize food waste through knowing your own food nearest expired date.</p>
+              <button type="button" class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill justify-content-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add Food
+              </button>
           </div>
-          <div class="row g-4" id = "card_container">
-              
-              
+          <div class="row g-4">
+              <div class = "container" id = "card_container">
+
+              </div>
           </div>
       </div>
   </div>
   <!-- Expiry End -->
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  </body>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  
   <script>
-      async function getData() {
-        return $.get("{% url 'expiry:show_json' %}", (res) => res.json())
-      }
+    async function getData() {
+      return $.get("{% url 'expiry:show_json' %}", (res) => res.json())
+    }
 
-      async function refreshCard() {
-        document.getElementById("card_container").innerHTML = ""
-        const food_data = await getData()
-        let htmlString = ``
-        food_data.forEach((food) => {
-          htmlString += `\n
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-              <div class="bg-white text-center h-100 p-4 p-xl-5" id="${food.pk}-card">
-                <h4><b>${food.fields.food_name}</b></h4>
-                <p>Expired at : ${food.fields.food_expired_date}</p> 
-                <a href="delete/${food.pk}">🗑️</a>
-              </div>
+    async function refreshCard() {
+      document.getElementById("card_container").innerHTML = ""
+      const foods = await getData()
+      let htmlString = ``
+      foods.forEach((food) => {
+        htmlString += `\n
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" id="${food.pk}-card">
+            <div class="bg-white text-center h-100 p-4 p-xl-5">
+              <h4><b>${food.fields.food_name}</b></h4>
+              <p>Expired at : ${food.fields.food_expired_date}</p> 
+              <a href="delete-food/${food.pk}">🗑️</a>
             </div>
-          `   
-        })
-        
-        document.getElementById("card_container").innerHTML = htmlString
-      }
+          </div>
+        `   
+      })
+      
+      document.getElementById("card_container").innerHTML = htmlString
+    }
 
-      // Refresh Card
-      refreshCard()
+    // Refresh Card
+    refreshCard()
 
-      // When clicked "submit" on id "create_food_note", it'll run anonymous function below
-      $(document).on('submit', '#create_food_note', function(e){
-        e.preventDefault;
+    // When clicked "submit" on id "create_food_note", it'll run anonymous function below
+    $(document).on('submit', '#create_food_note', function(e){
+      e.preventDefault;
 
-        $.ajax({
-          type:'POST',
-          url:"{% url 'expiry:add_food' %}",
-          data:{
-            food_name:$('#food_name').val(),
-            food_expired_date:$('#food_expired_date').val(),
-            csrfmiddlewaretoken:'{{ csrf_token }}',
-          },
-          dataType: 'json',
-        });
+      $.ajax({
+        type:'POST',
+        url:"{% url 'expiry:add_food' %}",
+        data:{
+          food_name:$('#food_name').val(),
+          food_expired_date:$('#food_expired_date').val(),
+          csrfmiddlewaretoken:'{{ csrf_token }}',
+        },
+        dataType: 'json',
       });
+    });
 
-  </script>
+  </script>  
+  
+  </body>
 </html>
 
 {% endblock content %}
