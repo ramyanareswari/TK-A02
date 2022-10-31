@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     "homepage",
     "miniquiz",
     "expiry",
-    "send_foodwaste"
+    "send_foodwaste",
 ]
 
 MIDDLEWARE = [
