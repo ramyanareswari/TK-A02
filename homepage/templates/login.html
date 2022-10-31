@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Login</title>
+{% endblock meta %}
+
+{% block content %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<div class = "login">
+
+    <h1>Login</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+              
+        <label for="username">Username:</label>
+        <input type="text" name="username" placeholder="Username" class="form-control">     
+    
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Password" class="form-control">
+        
+        <input class="btn login_btn" type="submit" value="Login">
+       
+    </form>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}     
+        
+    Belum mempunyai akun? <a href="{% url 'homepage:register' %}">Buat Akun</a>
+
+</div>
+
+{% endblock content %}
