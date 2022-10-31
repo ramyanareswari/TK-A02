@@ -23,6 +23,8 @@ def show_tips_article(request):
             'author': obj.author.username,
             'title': obj.title,
             'content': obj.content,
+            'publish': obj.publish,
+            'image': obj.image
         }
         data.append(item)
     context = {
