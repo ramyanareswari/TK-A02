@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 # View main page to start quiz
-def show_mainpage(request):
+def quiz_main_page(request):
     quiz = QuizModel.objects.all()
     return render(request, 'main.html', {'quizs' : quiz})
 
