@@ -12,12 +12,83 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type= "" href="{% static 'css/tips/tips.css' %}">
-
-
+    <link rel="stylesheet" href="{% static 'css/tips/template.css' %}">
 </head>
 
 <body>
 
+    <!-- NAVBAR -->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light py-lg-3 px-lg-2 data-wow-delay" data-wow-delay="0.1s">
+
+        <a href="{% url 'homepage:show_homepage' %}" class="navbar-brand ms-4 ms-lg-3">
+        <img src="{% static 'diary/foodybuddy.svg' %}" alt="Fooody">
+        <!-- <h1 class="fw-bold m-0" style="color:#FF9437">F<span style="color:#333">ooo</span>dy</h1> -->
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dropdownMenuOffset"
+        aria-controls="dropdownMenuOffset" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse px-lg-2 " style="background-color:white;" id="dropdownMenuOffset">
+
+        <div class="navbar-nav ms-auto px-4 p-lg-0">
+            <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link active fw-bold"
+            style="color:#F68829">Home</a>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Tracker
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'diary:show_diary' %}">Food Diary</a></li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
+            </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Information
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'tips:show_tips_article' %}">Articles</a></li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Food Waste Organizations</a></li>
+            </ul>
+            </li>
+            <a href="{% url 'miniquiz:show_quiz_mainpage' %}" class="nav-item nav-link">Quiz</a>
+            <a href="{% url 'diary:show_diary' %}" class="nav-item nav-link">Send Food Waste</a>
+            <button type="button" class="btn btn-outline"><a href="{url 'homepage:logout' %}"></a>Logout</button>
+        </div>
+        </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+
+    <!-- Start Hero -->
+    <section class="cta-section section-padding section-bg">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+
+                <div class="col-lg-5 col-12 ms-auto">
+                    <h2 class="mb-0">Make an impact. <br> Save lives.</h2>
+                </div>
+
+                <div class="col-lg-5 col-12">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#myModal"><a class="custom-btn btn">+ Tulis artikel baru</a></button>
+                    
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Hero -->
 
     <!-- Start Modal -->
     <div class="modal fade" id="myModal" data-keyboard="false" tabindex="-1" aria-labelledby="myModal" aria-hidden="true">
@@ -51,126 +122,30 @@
                 <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
             </div>
 
-            <!-- New Article Button -->
-            {% if user.is_authenticated %}
-            <div class="col d-flex justify-content-center">
-
-                <div class="create">
-                    <button type="button"class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">+ Add New Article</button>
-                </div>
-
+            <div class="container p-3 mt-4" id="article-container">
             </div>
-            {% endif %}
-            <div class="col d-flex justify-content-center">
-            </div>
-            <!-- End New Article Button -->
-
-
-            <div class="container p-3 mt-4" id="article-container"></div>
 
             
         </div>
     </div>
-
     <!-- Article End -->
 
 
-    <!-- <div class="container mt-5 mb-3">
- 
-        <div class="row">
-            {% for post in posts %}
-            <div class="col-lg-4 my-4">
-                <div class="card shadow" style="width: 20rem; height: 33rem;">
-                    <img src="/media/{{post.image}}" class="card-img-top" alt="..." height="250px">
-                    <div class="card-body">
-                      <h5 class="card-title">{{post.title}} <br><small>by {{post.author}}</small></h5>
-                      <p class="card-text">{{post.content| truncatechars:210}}</p>
-                      <a href="blog/{{post.slug}}" class="btn btn-primary">Read More {% if user.is_superuser %}<a href="delete_blog_post/{{post.slug}}/" class="btn btn-danger mx-4">Delete Blog</a>{% endif %}</a>
-                    </div>
-                  </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div> -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i>Top</a>
+    <!-- Back to Top Button -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top">Top</a>
     <!-- End Back to Top -->
 
-    <!-- Bootstrap -->
+
+    <!-- Bootstrap Links -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-    <!-- Jquery -->
+    <!-- Jquery Link -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- Template Javascript -->
-    <!-- <script src="../static/js/modal.js"></script> -->
+    <script type="text/javascript" src="{% static '/js/modal.js' %}"></script>
 </body>
 
-<script>
-    
 
-async function getArticleData() {
-        return $.get("{% url 'tips:get_article' %}", (res) => res.json())
-      }
-
-async function addArticle() {
-    document.getElementById("article-container").innerHTML = ""
-    const data = await getArticleData()
-    let htmlString = ``
-    data.forEach((e) => {
-        htmlString += `\n
-        <div class="card mb-3">
-            <div class="row">
-            
-                <div class="col-md-4">
-                    <div class="position-relative">
-                    <img
-                        height="230px"
-                        src=${e.fields.image}
-                        class="rounded w-100"
-                    >
-                    </div>
-                </div>
-
-                <div class="col-md-8">
-                    <div class="mt-2">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-1">${e.fields.title}</h5>
-                    </div>
-                    <div class="d-flex justify-content-md-start justify-content-between views-content mt-2">
-                        <div class="d-flex flex-row align-items-center"> <i class="fa fa-calendar"></i> <span class="ms-1 views">${e.fields.publish}</span> </div>
-                        <div class="d-flex flex-row align-items-center ms-2"> <i class="fa fa-user"></i> <span class="ms-1 views">${e.fields.author}</span> </div>
-                    </div>
-                    <p class="text-dark mt-3">${e.fields.content}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `   
-    })
-    document.getElementById("article-container").innerHTML = htmlString
-}
-
-addArticle()
-
-$(document).on('submit', '#createForm', function(e){
-        e.preventDefault;
-
-        $.ajax({
-          type:'POST',
-          url:"{% url 'tips:add_article' %}",
-          data:{
-            title:$('#title').val(),
-            content:$('#content').val(),
-            csrfmiddlewaretoken:'{{ csrf_token }}',
-          },
-          dataType: 'json',
-        });
-      });
-
-
-</script>
 
 {% endblock content %}
