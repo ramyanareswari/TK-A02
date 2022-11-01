@@ -29,15 +29,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "homepage",
     "miniquiz",
-<<<<<<< HEAD
     "diary",
-=======
     "expiry",
     "tips",
     "send_foodwaste",
-
-    
->>>>>>> 8471ac6cb42ef219bf2b2db7f66cdb19bdb58aed
 ]
 
 MIDDLEWARE = [
