@@ -3,14 +3,14 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 # View main page to start quiz
-def quiz_main_page(request):
+def show_quiz_homepage(request):
     quiz = QuizModel.objects.all()
     return render(request, 'main.html', {'quizs' : quiz})
 
 # View quiz page (quiz questions)
-def show_quiz(request):
+def show_quiz_mainpage(request):
     quiz = QuizModel.objects.all()
-    return render(request, 'quiz.html', {'obj': quiz})
+    return render(request, 'quiz.html', {'quizs': quiz})
 
 # View quiz questions and answers in json format
 def show_quiz_json(request):
