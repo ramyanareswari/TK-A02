@@ -7,14 +7,14 @@ def show_quiz_homepage(request):
     quiz = QuizModel.objects.all()
     return render(request, 'main.html', {'quizs' : quiz})
 
-# View quiz page (quiz questions)
-def show_quiz_mainpage(request):
-    quiz = QuizModel.objects.all()
-    return render(request, 'quiz.html', {'quizs': quiz})
+# View quiz page to start the quiz
+def show_quiz_mainpage(request, pk):
+    quiz = QuizModel.objects.get(pk = pk)
+    return render(request, 'quiz.html', {'obj': quiz})
 
 # View quiz questions and answers in json format
-def show_quiz_json(request):
-    quiz = QuizModel.objects.all()
+def show_quiz_json(request, pk):
+    quiz = QuizModel.objects.get(pk = pk)
     questions = []
 
     for q in quiz.get_questions():
@@ -31,18 +31,19 @@ def show_quiz_json(request):
     })
 
 # Save the quiz and view the result
-# NOT DONE YET :/
 def save_quiz(request, pk):
     
     if(request.is_ajax()):
 
         # State variables for accomodate question object
         questions = []
-        data = dict(request.POST)
+        data = request.POST
+        data_ = dict(data.lists())
+        #data = dict(request.POST)
         data.pop('csrfmiddlewaretoken')
 
         # Looping data.keys for getting question object
-        for k in data.keys():
+        for k in data_.keys():
 
             # Append question object to questions
             question = QuestionModel.objects.get(text=k)
@@ -82,7 +83,7 @@ def save_quiz(request, pk):
                             results.append({str(q): {'correct_answer': correct_answer, 'answered': a_selected}})
 
                         # Add score with a.poin
-                        score += a.poin
+                        score += a.point
 
                     # Executed if user anser not equal with a.text or user have answer the question correctly
                     else:
@@ -93,8 +94,8 @@ def save_quiz(request, pk):
 
 
                     # Initialize max_score if a.poin is greater than max_score
-                    if a.poin > max_score :
-                        max_score = a.poin
+                    if a.point > max_score :
+                        max_score = a.point
 
 
                 full_score += max_score
@@ -122,7 +123,7 @@ def save_quiz(request, pk):
 
         # If user answer all question, create Result onject and send data using JsonResponse
         if full:
-            ResultModel.objects.create(quiz=quiz, user=user, score=score)
+            ResultModel.objects.create(quiz=quiz, user=user, final_score=score)
 
             if score >= quiz.required_score_to_pass:
                 return JsonResponse({'quiz': quiz.name, 'passed': "True", 'score': score, 'results': results, 'full': "True"})
