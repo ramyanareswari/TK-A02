@@ -1,5 +1,6 @@
 
-from django.shortcuts import render
+from contextlib import redirect_stderr
+from django.shortcuts import redirect, render
 from django.http.response import HttpResponseBadRequest, HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
@@ -16,27 +17,13 @@ from tips.models import TipsArticle
 # =============== Show all article =============== #
 def show_tips_article(request):
     articles = TipsArticle.objects.all()
-    data = []
-    for obj in articles:
-        item = {
-            'pk': obj.id,
-            'author': obj.author.username,
-            'title': obj.title,
-            'content': obj.content,
-            'publish': obj.publish,
-            'image': obj.image
-        }
-        data.append(item)
+
     context = {
         'author': request.user.username,
         'articles': articles,
-        'data':data,
         'form': AddArticle()
     }
-    return render(request, 'tips.html', context)
-    
-    # return JsonResponse({'data':data})
-    
+    return render(request, 'tips.html', context)    
     
 
 # =============== Add article modal =============== #
@@ -62,8 +49,11 @@ def add_article(request):
                 'publish': art.publish,
                 'url' : '/articles'
                 }
+                
 
-        return JsonResponse(response)
+        return HttpResponse(response)
+    return render(request, "tips.html", {'form': AddArticle()})
+    # return redirect('tips:show_tips_article')
         
 
 #  ==== AJAX view which returns a JSON object from json database ====
