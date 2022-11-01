@@ -27,10 +27,13 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
           <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link">Home</a>
-          <a href="{% url 'miniquiz:quiz_main_page' %}" class="nav-item nav-link">Quiz</a>
-          
-          
+          <a href="{% url 'miniquiz:show_quiz_mainpage' %}" class="nav-item nav-link">Quiz</a>
+          <a href="{% url 'diary:show_diary' %}" class="nav-item nav-link">Diary</a>
+          <a href="{% url 'expiry:show_expiry' %}" class="nav-item nav-link">Tracker</a>
+          <a href="{% url 'tips:show_tips_article' %}" class="nav-item nav-link">Tips</a>
+          <a href="{% url 'send_foodwaste:show_foodwaste' %}" class="nav-item nav-link">Send Foodwaste</a>
 
+          
         </div>
       </div>
     </nav>

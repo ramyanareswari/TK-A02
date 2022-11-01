@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
-class MiniquizConfig(AppConfig):
+
+class DiaryConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'miniquiz'
+    name = 'diary'
