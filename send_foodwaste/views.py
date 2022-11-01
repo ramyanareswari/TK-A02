@@ -3,6 +3,8 @@ from send_foodwaste.models import Send_FoodWaste_Model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
+from send_foodwaste.forms import FoodwasteForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -29,7 +31,6 @@ def add_foodwaste(request):
         new_foodwaste = Send_FoodWaste_Model(user = user, name = name, phone_number = phone_number, address = address, food_type = food_type, expiry_date = expiry_date, weight = weight)
         new_foodwaste.save()
         return JsonResponse({
-            'user' : user.id,
             'name' : name,
             'phone_number' : phone_number,
             'address' : address,
@@ -37,7 +38,19 @@ def add_foodwaste(request):
             'expiry_date' : expiry_date,
             'weight' : weight
         })
-
+        # form = FoodwasteForm(request.POST)
+        # if form.is_valid():
+        #     form.instance.user = request.user
+        #     form.save()
+        # return JsonResponse({
+        #     'name' : form.name,
+        #     'phone_number' : form.phone_number,
+        #     'address' : form.address,
+        #     'food_type' : form.food_type,
+        #     'expiry_date' : form.expiry_date,
+        #     'weight' : form.weight
+        # })
+        
 @login_required(login_url='/login/')
 def delete_foodwaste(request, pk):
     if Send_FoodWaste_Model.objects.get(pk = pk).user == request.user:
