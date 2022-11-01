@@ -1,5 +1,5 @@
 async function getArticleData() {
-    return $.get("/articles/json", (res) => res.json())
+    return $.get("/tips/json/", (res) => res.json())
   }
 
 async function addArticle() {
@@ -47,7 +47,7 @@ $(document).on('submit', '#createForm', function(e){
 
     $.ajax({
       type:'POST',
-      url:"/articles/add-article/",
+      url:"/tips/add-article/",
       data:{
         title:$('#id_title').val(),
         content:$('#id_content').val(),
