@@ -48,7 +48,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
+            <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
           </ul>
         </li>
 
@@ -58,15 +58,15 @@
           </a>
 
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'diary:show_diary' %}">Articles</a></li>
+            <li><a class="dropdown-item" href="{% url 'tips:show_tips_article' %}">Articles</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{url 'expiry:show_expiry' %}">Food Waste Organizations</a></li>
+            <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Food Waste Organizations</a></li>
           </ul>
         </li>
 
-        <a href="{% url 'miniquiz:quiz_main_page' %}" class="nav-item nav-link">Quiz</a>
+        <a href="{% url 'miniquiz:show_quiz_mainpage' %}" class="nav-item nav-link">Quiz</a>
         <a href="{% url 'diary:show_diary' %}" class="nav-item nav-link">Send Food Waste</a>
 
         <button type="button" class="btn btn-outline"><a href="{url 'homepage:logout' %}"></a>Logout</button>
