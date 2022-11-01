@@ -47,9 +47,9 @@ def add_article(request):
                 'title': art.title,
                 'content': art.content,
                 'publish': art.publish,
-                'url' : '/articles'
+                'url' : '/tips/'
                 }
-                
+
 
         return HttpResponse(response)
     return render(request, "tips.html", {'form': AddArticle()})
