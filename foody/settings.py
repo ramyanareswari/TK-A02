@@ -29,7 +29,15 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "homepage",
     "miniquiz",
+<<<<<<< HEAD
     "diary",
+=======
+    "expiry",
+    "tips",
+    "send_foodwaste",
+
+    
+>>>>>>> 8471ac6cb42ef219bf2b2db7f66cdb19bdb58aed
 ]
 
 MIDDLEWARE = [
@@ -121,6 +129,11 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

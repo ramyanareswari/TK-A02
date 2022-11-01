@@ -15,11 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls')),
+<<<<<<< HEAD
     path('quiz/', include('miniquiz.urls')),
     path('diary/', include('diary.urls')),
+=======
+    path('mini-quiz/', include('miniquiz.urls')),
+    path('expiry/', include('expiry.urls')),
+    path('tips/', include('tips.urls')),
+    path('send_foodwaste/', include('send_foodwaste.urls')),
+>>>>>>> 8471ac6cb42ef219bf2b2db7f66cdb19bdb58aed
 
+    
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

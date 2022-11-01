@@ -1,3 +1,4 @@
 from django.contrib import admin
+from tips.models import TipsArticle
 
-# Register your models here.
+admin.site.register(TipsArticle)
