@@ -5,6 +5,6 @@ app_name = 'diary'
 
 urlpatterns = [
     path('create-log/', create_log, name='create_log'),
-    path('diary', show_diary, name='show_diary'),
+    path('', show_diary, name='show_diary'),
 
 ]
