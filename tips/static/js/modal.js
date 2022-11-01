@@ -1,7 +1,11 @@
+
+// ======== untuk get data dari submit form ========
 async function getArticleData() {
     return $.get("/tips/json/", (res) => res.json())
   }
 
+  
+// ======== untuk post data dari hasil submit form ========
 async function addArticle() {
 document.getElementById("article-container").innerHTML = ""
 const data = await getArticleData()
