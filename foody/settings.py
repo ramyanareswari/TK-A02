@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "expiry",
     "tips",
     "send_foodwaste",
+
+    
 ]
 
 MIDDLEWARE = [

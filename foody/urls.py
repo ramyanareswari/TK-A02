@@ -18,15 +18,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls')),
-    path('quiz/', include('miniquiz.urls')),
-    path('articles/', include('tips.urls')),
+    path('mini-quiz/', include('miniquiz.urls')),
     path('expiry/', include('expiry.urls')),
+    path('tips/', include('tips.urls')),
     path('send_foodwaste/', include('send_foodwaste.urls')),
+
+    
 ]
 
 if settings.DEBUG:
