@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('homepage.urls')),
     path('mini-quiz/', include('miniquiz.urls')),
     path('expiry/', include('expiry.urls')),
+    path('diary/', include('diary.urls')),
     path('tips/', include('tips.urls')),
     path('send_foodwaste/', include('send_foodwaste.urls')),
 
