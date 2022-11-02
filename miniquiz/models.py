@@ -57,7 +57,7 @@ class ResultModel(models.Model):
     # Attributes.
     quiz = models.ForeignKey(QuizModel, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    result_score = models.FloatField()
+    score = models.FloatField()
 
     # String function.
     def __str__(self):
