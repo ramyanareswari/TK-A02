@@ -2,80 +2,147 @@
 {% load static %}
 {% block meta %}
 <title>{{user}}'s food diary</title>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<!-- XDSoft DateTimePicker -->
-<link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
-  integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
-  integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    var count = 0;
+    const food = log =>
+  `
+    <div id=${log.pk} class="card-deck d-flex flex-column flex-wrap flex-lg-row flex-sm-row justify-content-center gx-4">
+      <div class="card">
+        <button onclick="window.location='delete_log/${log.pk}'" type="button" class="btn-close p-3"></button>
+        <div class="card-body" style="overflow-y: auto">
+          ${log.fields.is_finished ? `<div class="badge rounded-pill bg-success mb-3">Habis</div>` : `<div class="badge rounded-pill bg-danger mb-3">Tidak Habis</div>`}
+          <h4 class="card-title fw-bold">${log.fields.foodname}</h4>
+          <small class="card-text text-muted">${log.fields.date}</small><br>
+          <small class="card-text">${log.fields.description}</small>
+        </div>
+        <div class="card-footer p-4">
+          <span>Rp ${log.fields.price},00</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  function show_food(){
+    $.get("{% url 'diary:get_json' %}", function(log){
+      $.each(log, (i,result) => {
+        $("#mainBody").append(food(result));
+        count++;
+      });
+    });
+  };
+  const remove_log = (log) => {
+        $(`#${log.pk}`).click(function () {
+          $.ajax({
+            url: `/todolist/delete/${log.pk}`,
+            type: 'DELETE',
+            success: function (response) {
+              $(`#${log.pk}-card`).remove()
+            },
+          })
+        })
+      }
+  console.log(count);
+  const closeModal = e => {
+            $('.modal').removeClass('in');
+            $('.modal').attr("aria-hidden", "true");
+            $('.modal').css("display", "none");
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
+        };
+  
+  $("#createForm").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'diary:create_log' %}", 
+      data: {
+      foodname: $("#foodname").val(),
+      description: $("#description").val(),
+      is_finished: $("#is_finished :selected").val(),
+      date: $('#date').val(),
+      price: $('#price').val()},
+    headers: {"X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value},
+    success: function(result){
+      $("#createForm").trigger("reset");
+      $("#mainBody").append(food(result));
+      closeModal();
+      count++;
+      console.log(count)
+    },
+    });
+  });
+  show_food();
+});
+  
+</script>
 {% endblock meta %}
 {% block content %}
 <head>
   <!-- NAVBAR START -->
-  <nav class="navbar sticky-top navbar-expand-lg navbar-light data-wow-delay container-fluid" style="position: fixed;" data-wow-delay="0.1s">
-    <div class="container">
-        <a href="{% url 'homepage:show_homepage' %}" class="navbar-brand ms-4 ms-lg-3">
-          <img src="{% static 'diary/foodybuddy.svg' %}" alt="Fooody">
-          <!-- <h1 class="fw-bold m-0" style="color:#FF9437">F<span style="color:#333">ooo</span>dy</h1> -->
-        </a>
-    
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dropdownMenuOffset"
-          aria-controls="dropdownMenuOffset" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" style="background-color:white;" id="dropdownMenuOffset">
-    
-          <div class="navbar-nav ms-auto px-4 p-lg-0">
-            <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link active fw-bold"
-              style="color:#F68829">Home</a>
-    
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Tracker &nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                </svg>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'diary:show_diary' %}">Food Diary</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
-              </ul>
-            </li>
-    
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" >
-                Information&nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                </svg>
-              </a>
-    
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'tips:show_tips_article' %}">Articles</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'organization:show_organization' %}">Food Waste Organizations</a></li>
-              </ul>
-            </li>
-    
-            <a href="{% url 'miniquiz:show-quiz-homepage' %}" class="nav-item nav-link">Quiz</a>
-            
-            <a href="{% url 'send_foodwaste:show_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
-    
-            <button type="button" class="btn btn-outline"><a href="{%url 'homepage:logout' %}">Logout</a></button>
-          </div>
-        </div>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light data-wow-delay container-fluid" style="position: fixed;" data-wow-delay="0.1s">
+  <div class="container">
+      <a href="{% url 'homepage:show_homepage' %}" class="navbar-brand ms-4 ms-lg-3">
+        <img src="{% static 'diary/foodybuddy.svg' %}" alt="Fooody">
+        <!-- <h1 class="fw-bold m-0" style="color:#FF9437">F<span style="color:#333">ooo</span>dy</h1> -->
+      </a>
+  
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dropdownMenuOffset"
+        aria-controls="dropdownMenuOffset" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" style="background-color:white;" id="dropdownMenuOffset">
+  
+        <div class="navbar-nav ms-auto px-4 p-lg-0">
+          <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link active fw-bold"
+            style="color:#F68829">Home</a>
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              Tracker &nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'diary:show_diary' %}">Food Diary</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
+            </ul>
+          </li>
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" >
+              Information&nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </a>
+  
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'tips:show_tips_article' %}">Articles</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'organization:show_organization' %}">Food Waste Organizations</a></li>
+            </ul>
+          </li>
+  
+          <a href="{% url 'miniquiz:show-quiz-homepage' %}" class="nav-item nav-link">Quiz</a>
+          
+          <a href="{% url 'send_foodwaste:show_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
+  
+          <button type="button" class="btn btn-outline"><a href="{%url 'homepage:logout' %}">Logout</a></button>
         </div>
       </div>
-    </nav>
-      <!-- NAVBAR -->
+      </div>
+    </div>
+  </nav>
+    <!-- NAVBAR -->
 </head>
 <body>
   <section class="d-flex justify-content-center overflow-auto" id="decoration">
@@ -90,8 +157,8 @@
     <div id="notification-bar" class="container-md-100">
       <div class="d-flex justify-content-center">
         <div id="statusText" class="mt-4">
-          <h2 style="color: #00A843" class="fw-bold">Belum Ada Log</h2>
-          <p class="text-center">test</p>
+          <h2 style="color: #333" class="fw-bold text-center">current user: {{user}}</h2>
+          <p class="text-center">track what you eat, how much you spent for food, all in one place</p>
         </div>
       </div>
       <div class="container-fluid d-flex justify-content-around">
@@ -101,65 +168,16 @@
                 data-target="#myModal">+ Tambah</a></button>
           </div>
           <div class="col-md-6 col-lg-6">
-            <button class="row btn btn-outline col-12 justify-content-center">Lihat Status</button>
+            <button class="row btn btn-outline col-12 justify-content-center"><a href="{% url 'expiry:show_expiry' %}">Track Expiry</a></button>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section id="mainBody" class="container-md h-100 d-flex flex-wrap justify-content-center align-items-center">
-   <div class="container-md-100 container-lg-100">
-   <div class="row col-rows-3">
-    <div class="card-deck d-flex flex-column flex-wrap flex-lg-row flex-sm-row justify-content-center gx-4">
-      <div class="card">
-        <div class=" mt-8 justify-content-around">
-          <span class="badge badge-pill badge-primary">Danger</span>
-                </div>
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
+  <section  id="mainBody" class="container-md h-100 d-flex flex-wrap justify-content-center align-items-center">
+    
   </section>
+  
   <!-- MODAL -->
   <div class="modal fade bg-modal-fade" id="myModal" data-keyboard="false" tabindex="-1" aria-labelledby="myModal"
     aria-hidden="true">
@@ -175,37 +193,33 @@
             <div class="mb-md-3">
               <div class="form mb-3">
                 <input type="text" name="foodname" id="foodname" placeholder="Nama makanan/minuman" class="form-control"
-                  style="border: 1px solid #000">
+                  style="border: 1px solid #000" required>
               </div>
               <div class="form mb-3">
-                <input id="datetimepicker" type="text" id="date" name="date" placeholder="Tanggal" class="form-control"
-                  style="border: 1px solid #000">
+                <input type="date" type="text" id="date" onfocus="(this.type='date')" onblur="(this.type='text')" name="date" placeholder="Tanggal" class="form-control"
+                  style="border: 1px solid #000" required>
               </div>
               <div class="form mb-3">
                 <textarea type="text" name="description" id="description" placeholder="Deskripsi" class="form-control"
-                  style="border: 1px solid #000"></textarea>
+                  style="border: 1px solid #000" required></textarea>
               </div>
               <div class="form mb-3">
                 <input type="text" name="price" id="price" placeholder="Berapa harganya?" class="form-control"
-                  style="border: 1px solid #000">
+                  style="border: 1px solid #000" required>
               </div>
-              <div class="form mb-1">
-                <label for="foodname" class="form-label">Makannya habis?</label><br>
-                <div class="form-check-inline">
-                  <input class="form-check-input" type="radio" name="radio" id="habistidak" checked />
-                  <label class="form-check-label" for="habis">
-                    Habis
-                  </label>
-                </div>
-                <div class="form-check-inline">
-                  <input class="form-check-input" type="radio" name="radio" id="habistidak" />
-                  <label class="form-check-label" for="tidak habis">
-                    Tidak Habis
-                  </label>
-                </div>
-              </div>
+              <div class="form mb-1">  
+                <!-- <input type="checkbox" name="is_finished" id="habis" value="Habis" /> Habis Dong! -->
+                <!-- <div class="form-check-inline">
+                  <input type="radio" name="is_finished" id="habis" value="Habis" />Habis
+                  <input type="radio" name="is_finished" id="tidakhabis" value="TidakHabis" />Tidak Habis
+                </div> -->
+                <select name="is_finished" class="form-select" for="is_finished">
+                  <option selected>Habis gak makannyaa?</option>
+                  <option value="True">Habis dong! :D</option>
+                  <option value="False">Gak habis :')</option>
+                </select>
             </div>
-            <button class="btn btn-primary px-3" type="submit" name="submit" value="Create Log">+
+            <button  id="submit" class="btn btn-primary px-3" type="submit" name="submit" value="Create Log">+
               Tambah Log</button>
           </form>
         </div>
@@ -213,29 +227,28 @@
       </div>
     </div>
       <script>
-        $(function () {
-          $("#datetimepicker").datetimepicker();
-        });
      
       </script>
 </body>
 <style>
+.dropdown-toggle::after {
+    display: none;
+}
 #mainBody {
-  top: 608px;
+  top: 620px;
   position: relative;
+  margin-top: 100px;
 }
 .card {
-  max-width: 230px !important;
+  min-width: 250px;
+  min-height: 300px;
+  max-width: 250px !important;
   max-height: 300px !important;
   border: 1px solid #000;
   text-align: center;
   margin-bottom: 20px;
   margin-left:20px; 
   
-}
-.card-deck {
-  top: 100px;
-   
 }
   #notification-bar {
     background-color: white;
@@ -247,6 +260,7 @@
     box-shadow: 10px 10px 0px #000000;
     border-radius: 15px;
     position: absolute;
+    margin-bottom: 50px;
   }
   .heading {
     position: absolute;
@@ -277,8 +291,9 @@
   }
   .plate {
     box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     border-radius: 100%;
+    overflow-x: hidden;
     
   }
   @media (min-width: 720px) {
@@ -291,8 +306,16 @@
       border: 1px solid #000000;
       box-shadow: 10px 10px 0px #000000;
       border-radius: 15px;
-      position: re;
+      margin-bottom: 50px;
     }
+    .plate {
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 100%;
+    overflow-x: hidden;
+    
+  }
+  
   }
   #outerplate {
     width: 624px;
