@@ -13,7 +13,7 @@ window.onload = function () {
     // Listener in Goback Button
     if(goback1 != null) {
         goback1.addEventListener('click', ()=> {
-        window.location.href = '/'
+        window.location.href = '/';
         })
     }
 
@@ -24,25 +24,28 @@ window.onload = function () {
         })
     }
 
-    modalBtns.forEach(modalBtn=> modalBtn.addEventListener('click', ()=> {
-        const name = modalBtn.getAttribute('data-quiz')
-        const numOfQuestions = modalBtn.getAttribute('data-questions')
-        const scoreToPass = modalBtn.getAttribute('data-pass')
-        const time = modalBtn.getAttribute('data-time')
+    modalBtns.forEach((modalBtn) => 
+        modalBtn.addEventListener('click', () => {
+            const pk = modalBtn.getAttribute("data-pk");
+            const name = modalBtn.getAttribute('data-quiz');
+            const numOfQuestions = modalBtn.getAttribute('data-questions');
+            const scoreToPass = modalBtn.getAttribute('data-pass');
+            const time = modalBtn.getAttribute('data-time');
+            const action = modalBtn.getAttribute("data-action");
 
-        // Add this html tag to modalBody
-        modalBody.innerHTML = `
-            <div class="header-text-muted h10 mb-3">Are you sure want to begin <b>"${name}"</b>?</div>
-            <div class=text-muted>
-                <ul>
-                    <li>Test Name : ${name}</li>
-                    <li>Number of Question : ${numOfQuestions}</li>
-                    <li>Duration : ${time} min</li>
-                </ul>
-            </div>`;
+            // Add this html tag to modalBody
+            modalBody.innerHTML = `
+                            <div class="header-text-muted h10 mb-3">Are you sure want to begin <b>"${name}"</b>?</div>
+                            <div class=text-muted>
+                                <ul>
+                                    <li>Test Name : ${name}</li>
+                                    <li>Number of Question : ${numOfQuestions}</li>
+                                    <li>Duration : ${time} min</li>
+                                </ul>
+                            </div>`;
 
-        startBtn.addEventListener('click', ()=> {
-            window.location.href = url
-        })
+            startBtn.addEventListener('click', ()=> {
+                window.location.href =  url + pk;
+            });
     })
 )}

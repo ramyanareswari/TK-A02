@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# bismillah DONE ya wakk....
 # Model for Mini Quiz object.
 class QuizModel(models.Model):
 
@@ -45,7 +44,7 @@ class AnswerModel(models.Model):
     correct = models.BooleanField(default=False)
     question = models.ForeignKey(QuestionModel, on_delete=models.CASCADE, related_name="answers")
     created = models.DateTimeField(auto_now_add=True)
-    points = models.IntegerField()
+    point = models.IntegerField()
 
     # String function.
     def __str__(self):
@@ -58,7 +57,7 @@ class ResultModel(models.Model):
     # Attributes.
     quiz = models.ForeignKey(QuizModel, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    score = models.FloatField()
+    result_score = models.FloatField()
 
     # String function.
     def __str__(self):
