@@ -4,7 +4,8 @@ from miniquiz.views import *
 app_name = 'miniquiz'
 
 urlpatterns = [
-    path('', quiz_main_page, name='quiz_main_page'),
-    path('questions/', show_questions, name='show_questions'),
-    path('result/', show_result, name='show_result'),
+    path('', show_quiz_homepage, name='show-quiz-homepage'),
+    path('<pk>/', show_quiz_mainpage, name='show-quiz-mainpage'),
+    path('<pk>/data/', show_quiz_json, name='show-quiz-json'),
+    path('<pk>/save/', save_quiz, name='save-quiz'),
 ]

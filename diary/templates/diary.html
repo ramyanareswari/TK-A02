@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>{{user}}'s food diary</title>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<!-- XDSoft DateTimePicker -->
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+  integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+  integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+
+{% endblock meta %}
+
+{% block content %}
+
+<head>
+
+  <!-- NAVBAR -->
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light py-lg-3 px-lg-2 data-wow-delay" data-wow-delay="0.1s">
+
+    <a href="{% url 'homepage:show_homepage' %}" class="navbar-brand ms-4 ms-lg-3">
+      <img src="{% static 'diary/foodybuddy.svg' %}" alt="Fooody">
+      <!-- <h1 class="fw-bold m-0" style="color:#FF9437">F<span style="color:#333">ooo</span>dy</h1> -->
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dropdownMenuOffset"
+      aria-controls="dropdownMenuOffset" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse px-lg-2 " style="background-color:white;" id="dropdownMenuOffset">
+
+      <div class="navbar-nav ms-auto px-4 p-lg-0">
+        <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link active fw-bold"
+          style="color:#F68829">Home</a>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tracker
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'diary:show_diary' %}">Food Diary</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Information
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'tips:show_tips_article' %}">Articles</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Food Waste Organizations</a></li>
+          </ul>
+        </li>
+
+        <a href="{% url 'miniquiz:show-quiz-homepage' %}" class="nav-item nav-link">Quiz</a>
+        <a href="{% url 'diary:show_diary' %}" class="nav-item nav-link">Send Food Waste</a>
+
+        <button type="button" class="btn btn-outline"><a href="{url 'homepage:logout' %}"></a>Logout</button>
+      </div>
+    </div>
+    </div>
+  </nav>
+  <!-- NAVBAR -->
+
+</head>
+
+<body>
+  <section class="d-flex justify-content-center overflow-auto" id="decoration">
+    <div id="header-bg"></div>
+    <div class="plate" id="outerplate"></div>
+    <div class="plate" id="plateshadow"></div>
+    <div class="plate" id="innerplate"></div>
+    <p class="subheading">stay on track, stay conscious</p>
+    <h1 class="heading">fooody diary</h1>
+  </section>
+
+  <section class="d-flex justify-content-center">
+    <div id="notification-bar" class="container-md-100">
+      <div class="d-flex justify-content-center">
+        <div id="statusText" class="mt-4">
+          <h2 style="color: #00A843" class="fw-bold">Belum Ada Log</h2>
+          <p class="text-center">test</p>
+        </div>
+      </div>
+      <div class="container-fluid d-flex justify-content-around">
+        <div class="row gx-4 gy-0 mb-2 justify-content-center">
+          <div class="col-md-6 col-lg-6">
+            <button class="row btn btn-primary col-12 justify-content-center"><a data-toggle="modal"
+                data-target="#myModal">+ Tambah</a></button>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <button class="row btn btn-outline col-12 justify-content-center">Lihat Status</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="mainBody" class="container-md h-100 d-flex flex-wrap justify-content-center align-items-center">
+   <div class="container-md-100 container-lg-100">
+
+   <div class="row col-rows-3">
+    <div class="card-deck d-flex flex-column flex-wrap flex-lg-row flex-sm-row justify-content-center gx-4">
+      <div class="card">
+        <div class=" mt-8 justify-content-around">
+          <span class="badge badge-pill badge-primary">Danger</span>
+                </div>
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+      </div>
+
+  </section>
+
+
+  <!-- MODAL -->
+  <div class="modal fade bg-modal-fade" id="myModal" data-keyboard="false" tabindex="-1" aria-labelledby="myModal"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered px-3">
+
+      <div class="modal-content p-5 text-center" style="border:1px solid #000; box-shadow: 10px 10px 0px #000000;
+    border-radius: 15px;">
+
+        <button type="button" class="btn-close mb-3" data-dismiss="modal" aria-label="Close"></button>
+
+        <!-- FORM -->
+        <div class="container-md-100">
+          <form method="POST" id="createForm">
+
+            {% csrf_token %}
+            <h3 class="fw-bold m-3" style="color:#333">makan apa, <span style="color:#F68829">{{user}}</span>?</h3>
+            <div class="mb-md-3">
+
+              <div class="form mb-3">
+                <input type="text" name="foodname" id="foodname" placeholder="Nama makanan/minuman" class="form-control"
+                  style="border: 1px solid #000">
+              </div>
+
+              <div class="form mb-3">
+                <input id="datetimepicker" type="text" id="date" name="date" placeholder="Tanggal" class="form-control"
+                  style="border: 1px solid #000">
+              </div>
+
+              <div class="form mb-3">
+                <textarea type="text" name="description" id="description" placeholder="Deskripsi" class="form-control"
+                  style="border: 1px solid #000"></textarea>
+              </div>
+
+              <div class="form mb-3">
+                <input type="text" name="price" id="price" placeholder="Berapa harganya?" class="form-control"
+                  style="border: 1px solid #000">
+              </div>
+
+              <div class="form mb-1">
+                <label for="foodname" class="form-label">Makannya habis?</label><br>
+                <div class="form-check-inline">
+                  <input class="form-check-input" type="radio" name="radio" id="habistidak" checked />
+                  <label class="form-check-label" for="habis">
+                    Habis
+                  </label>
+                </div>
+
+                <div class="form-check-inline">
+                  <input class="form-check-input" type="radio" name="radio" id="habistidak" />
+                  <label class="form-check-label" for="tidak habis">
+                    Tidak Habis
+                  </label>
+                </div>
+
+              </div>
+            </div>
+
+            <button class="btn btn-primary px-3" type="submit" name="submit" value="Create Log">+
+              Tambah Log</button>
+          </form>
+        </div>
+        <!-- FORM -->
+      </div>
+    </div>
+
+      <script>
+        $(function () {
+          $("#datetimepicker").datetimepicker();
+        });
+
+     
+      </script>
+
+</body>
+
+<style>
+
+#mainBody {
+  top: 608px;
+  position: relative;
+}
+.card {
+  max-width: 230px !important;
+  max-height: 300px !important;
+  border: 1px solid #000;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-left:20px; 
+  
+}
+
+.card-deck {
+  top: 100px;
+   
+}
+
+  #notification-bar {
+    background-color: white;
+    padding: 30px;
+    width: 320px;
+    min-height: 230px;
+    top: 320px;
+    border: 1px solid #000000;
+    box-shadow: 10px 10px 0px #000000;
+    border-radius: 15px;
+    position: absolute;
+  }
+
+  .heading {
+    position: absolute;
+    color: #333333;
+    font-size: 56px;
+    top: 227px;
+    font-weight: bold !important;
+    text-decoration: underline;
+    z-index: -1;
+  }
+
+  .subheading {
+    color: #333333;
+    font-size: 18px;
+    position: absolute;
+    top: 207px;
+    z-index: -1;
+    line-height: 1px;
+
+  }
+
+  #header-bg {
+    width: 100%;
+    height: 326px;
+    background: #FEA150;
+    background-image: linear-gradient(rgba(0, 0, 0, .7) .1em, transparent .1em), linear-gradient(90deg, rgba(0, 0, 0, .7) .1em, transparent .1em);
+    background-size: 3em 3em;
+    z-index: -5;
+    position: fixed;
+    border-bottom: 1px solid black;
+  }
+
+  .plate {
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 100%;
+    
+  }
+
+  @media (min-width: 720px) {
+
+    #notification-bar {
+      background-color: white;
+      padding: 30px;
+      width: 720px;
+      min-height: 230px;
+      top: 320px;
+      border: 1px solid #000000;
+      box-shadow: 10px 10px 0px #000000;
+      border-radius: 15px;
+      position: re;
+    }
+  }
+
+  #outerplate {
+    width: 624px;
+    height: 624px;
+    top: 31px;
+    background: #FFECDB;
+    border: 1px solid #000000;
+    box-shadow: 8px 8px 0px #000000;
+    z-index: -4;
+  }
+
+  #plateshadow {
+    width: 501.86px;
+    height: 501.86px;
+    top: 93.67px;
+    background: #FBE2CC;
+    border: 1px solid #000000;
+    z-index: -3;
+  }
+
+  #innerplate {
+    width: 485.39px;
+    height: 485.39px;
+    align-items: center;
+    top: 103.06px;
+    background: #FFF4EA;
+    border: 1px solid #000000;
+    z-index: -2;
+  }
+</style>
+
+{% endblock content %}

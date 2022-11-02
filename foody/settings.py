@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "homepage",
     "miniquiz",
+    "diary",
     "expiry",
     "tips",
     "send_foodwaste",
