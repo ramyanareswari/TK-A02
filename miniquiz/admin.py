@@ -1,8 +1,6 @@
 from django.contrib import admin
 from miniquiz.models import *
 
-# bismillah DONE min...
-
 admin.site.register(ResultModel)
 admin.site.register(QuizModel)
 

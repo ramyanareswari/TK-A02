@@ -30,107 +30,55 @@ def show_quiz_json(request, pk):
         'time': quiz.time,
     })
 
+# To check request is ajax
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
 # Save the quiz and view the result
 def save_quiz(request, pk):
-    
-    if(request.is_ajax()):
-
-        # State variables for accomodate question object
+    if is_ajax(request):
         questions = []
         data = request.POST
         data_ = dict(data.lists())
-        #data = dict(request.POST)
-        data.pop('csrfmiddlewaretoken')
 
-        # Looping data.keys for getting question object
+        data_.pop('csrfmiddlewaretoken')
+
         for k in data_.keys():
-
-            # Append question object to questions
+            print('key: ', k)
             question = QuestionModel.objects.get(text=k)
             questions.append(question)
+    print(questions)
 
-        # State variables for calculating score
-        score = 0
-        full_score = 0
-        results = []
-        correct_answer = None
-        full = True
+    user = request.user
+    quiz = QuizModel.objects.get(pk=pk)
 
-        # Looping questions
-        for q in questions:
+    score = 0
+    multiplier = 100 / 5
+    results = []
+    correct_answer = None
 
-            # Get user answer
-            a_selected = request.POST.get(q.text)
+    for q in questions:
+        a_selected = request.POST.get(q.text)
 
-            # Executed when user answer the question
-            if(a_selected != ""):
-                
-                # Question_answer is all answer for each question
-                truth = False
-                max_score = 0
-                question_answer = AnswerModel.objects.filter(question=q)
-                
-                # Looping questions_answer
-                for a in question_answer:
-                    
-                    # Check if question answer is equal with a.text and user haven't answer the question correctly
-                    if a_selected == a.text and (not truth):
-                        
-                        # If a is correct answer, initialize correct_answer with a
-                        if a.correct:
-                            truth = True
-                            correct_answer = a.text
-                            results.append({str(q): {'correct_answer': correct_answer, 'answered': a_selected}})
+        if a_selected != "":
+            question_answers = AnswerModel.objects.filter(question=q)
+            for a in question_answers:
+                if a_selected == a.text:
+                    if a.correct:
+                        score += 1
+                        correct_answer = a.text
+                else:
+                    if a.correct:
+                        correct_answer = a.text
 
-                        # Add score with a.poin
-                        score += a.point
-
-                    # Executed if user anser not equal with a.text or user have answer the question correctly
-                    else:
-
-                        # If a corect, initialize correct_answer with a.text
-                        if a.correct:
-                            correct_answer = a.text
-
-
-                    # Initialize max_score if a.poin is greater than max_score
-                    if a.point > max_score :
-                        max_score = a.point
-
-
-                full_score += max_score
-
-                # Executed if user haven't answer the question correctly
-                if not truth:
-                    results.append({str(q): {'correct_answer': correct_answer, 'answered': a_selected}})
-
-            # Excecuted if user doesn't answer the question
-            else:
-                results.append({str(q): 'not-answered'})
-                full = False
-
-        # Get user object and quiz object
-        user = request.user
-        quiz = QuizModel.objects.get(pk=pk)
-
-        # Executed if user full_score == 0
-        if full_score!=0:
-            score = round(score/full_score * 100, 2)
-        
-        # Executed if full_score != 0
-        else :
-            score = 0
-
-        # If user answer all question, create Result onject and send data using JsonResponse
-        if full:
-            ResultModel.objects.create(quiz=quiz, user=user, final_score=score)
-
-            if score >= quiz.required_score_to_pass:
-                return JsonResponse({'quiz': quiz.name, 'passed': "True", 'score': score, 'results': results, 'full': "True"})
-        
-            else:
-                return JsonResponse({'quiz': quiz.name, 'passed': "False", 'score': score, 'results': results, 'full': "True"})
-        
-        # If not, state full as false and send data
+            results.append({str(q): {'correct_answer': correct_answer, 'answered': a_selected}})
         else:
-            return JsonResponse({'quiz': quiz.name, 'passed': "False", 'score': score, 'results': results, 'full': "False"})
+            results.append({str(q): 'not answered'})
+        
+    score_ = float(score * multiplier)
+    ResultModel.objects.create(quiz=quiz, user=user, score=score_)
+
+    if score_ >= quiz.required_score_to_pass:
+        return JsonResponse({'passed': True, 'score': score_, 'results': results})
+    else:
+        return JsonResponse({'passed': False, 'score': score_, 'results': results})
