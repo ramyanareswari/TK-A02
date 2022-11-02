@@ -20,6 +20,6 @@ def add_organization(request):
     if request.method == 'POST' :
         title = request.POST.get('title')
         description = request.POST.get('description')
-        Product.objects.create(title = title,description = description )
+        Information.objects.create(title = title,description = description )
         return JsonResponse({'title' : title,'description' : description}, status=200)
     
