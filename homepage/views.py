@@ -1,7 +1,7 @@
 import datetime
 from homepage.models import ContactForm
 import re
-from homepage.forms import CreateUserForm, FormContact
+from homepage.forms import FormContact
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.forms import UserCreationForm
 
 @csrf_exempt
 def show_homepage(request):
@@ -31,10 +32,10 @@ def show_homepage(request):
         return render(request, 'homepage.html', {'form':form})
 
 def register(request):
-    form = CreateUserForm()
+    form = UserCreationForm()
 
     if request.method == "POST":
-        form = CreateUserForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('username')

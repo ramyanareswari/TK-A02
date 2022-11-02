@@ -13,7 +13,7 @@ def show_foodwaste(request):
 @login_required(login_url='/login/')
 def show_foodwaste_json(request):
     data = Send_FoodWaste_Model.objects.filter(user = request.user)
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")  
+    return HttpResponse(serializsers.serialize("json", data), content_type="application/json")  
 
 @login_required(login_url='/login/')
 def add_foodwaste(request):
