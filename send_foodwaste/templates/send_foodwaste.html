@@ -92,6 +92,10 @@
     .text-white {
         color: white;
     }
+    .card {
+        border-color: #F68829;
+        border-width: 3px;
+    }
 </style>
 
 <div class="center container-fluid bg text-white">
@@ -172,7 +176,7 @@
     function addText(name, phone_number, address, food_type, expiry_date, weight, pk) {
         var text = `
         <div class="card mb-3 me-4 card-w">
-            <div class="card-body">
+            <div class="card-body border">
                 <ul class="list-group list-group-flush center">
                     <li class="list-group-item">${name}</li>
                     <li class="list-group-item">${address}</li>
