@@ -15,7 +15,15 @@
       <div class="card">
         <button onclick="window.location='delete_log/${log.pk}'" type="button" class="btn-close p-3"></button>
         <div class="card-body" style="overflow-y: auto">
-          ${log.fields.is_finished ? `<div class="badge rounded-pill bg-success mb-3">Habis</div>` : `<div class="badge rounded-pill bg-danger mb-3">Tidak Habis</div>`}
+          ${log.fields.is_finished ? `<span class="badge rounded-pill bg-success">Habis!</span> 
+                                    
+                                   <input type="checkbox" name="check"
+                                            onclick="location.href='update_log/${log.pk}'"
+                                            checked />` : `<span class="badge rounded-pill bg-danger">Tidak Habis</span>
+                                   <input type="checkbox" name="check"
+                                            onclick="location.href='update_log/${log.pk}'" />
+                                            `}
+          
           <h4 class="card-title fw-bold">${log.fields.foodname}</h4>
           <small class="card-text text-muted">${log.fields.date}</small><br>
           <small class="card-text">${log.fields.description}</small>
@@ -179,7 +187,7 @@
       <div class="d-flex justify-content-center">
         <div id="statusText" class="mt-4">
           <h2 style="color: #333" class="fw-bold text-center">current user: {{user}}</h2>
-          <p class="text-center">track what you eat, how much you spent for food, all in one place</p>
+          <p class="text-center">you have spent <b>Rp {{res}},00 </b>on food!</p>
 
         </div>
       </div>
@@ -242,19 +250,19 @@
                   style="border: 1px solid #000" required>
               </div>
 
-              <div class="form mb-1">  
-                <!-- <input type="checkbox" name="is_finished" id="habis" value="Habis" /> Habis Dong! -->
+              <!-- <div class="form mb-1">  
+                 <input type="checkbox" name="is_finished" id="habis" value="Habis" /> Habis Dong! -->
                 <!-- <div class="form-check-inline">
                   <input type="radio" name="is_finished" id="habis" value="Habis" />Habis
                   <input type="radio" name="is_finished" id="tidakhabis" value="TidakHabis" />Tidak Habis
                 </div> -->
-
+<!-- 
                 <select name="is_finished" class="form-select" for="is_finished">
                   <option selected>Habis gak makannyaa?</option>
                   <option value="True">Habis dong! :D</option>
                   <option value="False">Gak habis :')</option>
                 </select>
-            </div>
+            </div> -->
 
             <button  id="submit" class="btn btn-primary px-3" type="submit" name="submit" value="Create Log">+
               Tambah Log</button>
