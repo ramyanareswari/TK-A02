@@ -16,31 +16,30 @@ from tips.models import TipsArticle
 
 # =============== Show all article =============== #
 def show_tips_article(request):
-    articles = TipsArticle.objects.all()
+    if request.user.is_authenticated:
+        articles = TipsArticle.objects.all()
 
-    context = {
-        'author': request.user.username,
-        'articles': articles,
-        'form': AddArticle()
-    }
-    return render(request, 'tips.html', context)    
+        context = {
+            'author': request.user.username,
+            'articles': articles,
+            'form': AddArticle()
+        }
+        return render(request, 'tips.html', context)    
+    else:
+        return render(request, "tips_public.html")
     
 
 # =============== Add article modal =============== #
+@login_required(login_url='/login/')
 @csrf_exempt
 def add_article(request):
 
     form = AddArticle(request.POST or None)
     if (form.is_valid() and request.method == 'POST'):
-            # author = request.author
-            # title = request.POST.get('title')
-            # content = request.POST.get('content')
-            # save the form data to model
         art = form.save(commit=False)
         art.author = User.objects.get(username = request.user)
         art.save()
         
-        # when saved json dump
         response = {
                 'pk': art.id,
                 'author': art.author.username,
@@ -49,25 +48,26 @@ def add_article(request):
                 'publish': art.publish,
                 'url' : '/tips/'
                 }
-
-
         return HttpResponse(response)
     return render(request, "tips.html", {'form': AddArticle()})
-    # return redirect('tips:show_tips_article')
         
 
-#  ==== AJAX view which returns a JSON object from json database ====
+#  ==== view AJAX which returns a JSON object from json database ====
 def get_article(request):
     tipsObj = TipsArticle.objects.filter(author = request.user)
 
     data = serializers.serialize('json', tipsObj)
     return HttpResponse(data, content_type="application/json")
 
+# =============== Detail article =============== #
+@login_required(login_url='/login/')
+def detail_article(request, id):
+    articles = TipsArticle.objects.get(pk=id)
+
+    context = {
+        'articles': articles,
+    }
+
+    return render(request, 'detail.html', context)
 
 
-
-# =============== Delete article =============== #
-
-# =============== Like article =============== #
-
-# =============== Sort article =============== #

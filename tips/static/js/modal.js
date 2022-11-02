@@ -1,7 +1,7 @@
 
 // ======== untuk get data dari submit form ========
 async function getArticleData() {
-    return $.get("/tips/json/", (res) => res.json())
+    return $.get("/tips/json/", (respond) => respond.json())
   }
 
   
@@ -11,7 +11,8 @@ document.getElementById("article-container").innerHTML = ""
 const data = await getArticleData()
 let htmlString = ``
 data.forEach((e) => {
-    htmlString += `\n
+    htmlString += 
+    `
     <div class="card mb-3">
         <div class="row">
         
@@ -31,10 +32,14 @@ data.forEach((e) => {
                     <h5 class="mb-1">${e.fields.title}</h5>
                 </div>
                 <div class="d-flex justify-content-md-start justify-content-between views-content mt-2">
-                    <div class="d-flex flex-row align-items-center"> <i class="fa fa-calendar"></i> <span class="ms-1 views">${e.fields.publish}</span> </div>
-                    <div class="d-flex flex-row align-items-center ms-2"> <i class="fa fa-user"></i> <span class="ms-1 views">${e.fields.author}</span> </div>
+                    <div class="d-flex flex-row align-items-center"><span class="ms-1 views">${e.fields.publish}</span> </div>
                 </div>
-                <p class="text-dark mt-3">${e.fields.content}</p>
+                <p class="text-dark mt-3 px-3">${e.fields.content}</p>
+                <a
+                    class="btn btn-sm btn-dark"
+                    target="_blank"
+                    href="${e.pk}"
+                >Baca lebih banyak</a>
                 </div>
             </div>
         </div>
