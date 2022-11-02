@@ -54,14 +54,14 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Food Waste Organizations</a></li>
+              <li><a class="dropdown-item" href="{% url 'homepage:show_homepage' %}">Food Waste Organizations</a></li>
             </ul>
           </li>
   
           <a href="{% url 'miniquiz:show_quiz_mainpage' %}" class="nav-item nav-link">Quiz</a>
           <a href="{% url 'send_foodwaste:show_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
   
-          <button type="button" class="row btn btn-outline justify-content-center"><a href="{% url 'homepage:login' %}">Login</a></button>
+          <button type="button" class="btn btn-outline"><a href="{% url 'homepage:login' %}">Login</a></button>
         </div>
       </div>
       </div>
@@ -73,24 +73,24 @@
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <h1 class="display-3 mb-3 animated slideInDown"><b>Error located!</b></h1>
-        </div>
+      <div class="container">
+        <h1 class="display-3 mb-3 animated slideInDown"><b>Error located!</b></h1>
+      </div>
     </div>
     <!-- Page Header End -->
 
     <!-- 404 Start -->
-      <div class="container-xxl py-6 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                    <h1 class="display-1"><b>ERROR</b></h1>
-                    <h1 class="mb-4">You're Not Logged In</h1>
-                    <p class="mb-4">We’re sorry, but the page you have looked for can only be unlocked if you're logged in! Maybe try to login by pressing the button on the top right corner of the page?</p>
-                    <a class="row btn btn-outline justify-content-center" href="{% url 'homepage:show_homepage' %}">Or Go Back Home?</a>
-                </div>
-            </div>
+    <div class="container-xxl py-6 wow fadeInUp" data-wow-delay="0.1s">
+      <div class="container text-center">
+        <div class="row justify-content-center">
+          <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <h1 class="display-1"><b>ERROR</b></h1>
+            <h1 class="mb-4">You're Not Logged In</h1>
+            <p class="mb-4">We’re sorry, but the page you have looked for can only be unlocked if you're logged in! Maybe try to login by pressing the button on the top right corner of the page?</p>
+            <a class="row btn btn-outline justify-content-center" href="{% url 'homepage:show_homepage' %}">Or Go Back Home?</a>
+          </div>
         </div>
+      </div>
     </div>
     <!-- 404 End -->
 
