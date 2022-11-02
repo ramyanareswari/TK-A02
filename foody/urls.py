@@ -27,6 +27,7 @@ urlpatterns = [
     path('expiry/', include('expiry.urls')),
     path('tips/', include('tips.urls')),
     path('send_foodwaste/', include('send_foodwaste.urls')),
+    path('organization/', include('organization.urls')),
 ]
 
 if settings.DEBUG:
