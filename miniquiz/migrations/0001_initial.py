@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
             name='ResultModel',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.FloatField()),
+                ('result_score', models.FloatField()),
                 ('quiz', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='miniquiz.quizmodel')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
                 ('text', models.CharField(max_length=200)),
                 ('correct', models.BooleanField(default=False)),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('points', models.IntegerField()),
+                ('point', models.IntegerField()),
                 ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answers', to='miniquiz.questionmodel')),
             ],
         ),

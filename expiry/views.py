@@ -1,10 +1,9 @@
 from expiry.models import Food_Data
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
-from django.urls import reverse
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+import datetime
 
 # Create your views here.
 def show_expiry(request):
@@ -12,6 +11,7 @@ def show_expiry(request):
     if request.user.is_authenticated:
         context = {
             # 'query_set_food': food_data,
+            'today': datetime.date.today(),
             'username': request.user,
         }
         return render(request, "expiry.html", context)
