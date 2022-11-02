@@ -1,7 +1,6 @@
 import datetime
 from homepage.models import ContactForm
-import re
-from homepage.forms import FormContact
+from homepage.forms import CreateUserForm, FormContact
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
@@ -32,17 +31,17 @@ def show_homepage(request):
         return render(request, 'homepage.html', {'form':form})
 
 def register(request):
-    form = UserCreationForm()
+    form = CreateUserForm()
 
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('username')
             messages.success(request, 'Selamat, akun '+ user +' berhasil dibuat. Silakan login!')
             return redirect('homepage:login')
         else:
-            messages.success(request, 'Input tidak valid. Silakan masukkan kembali input Anda!')
+            messages.info(request, "Input tidak valid")
     context = {'form':form}
     return render(request, 'register.html', context)
 
