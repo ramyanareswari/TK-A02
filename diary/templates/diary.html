@@ -81,7 +81,7 @@
       data: {
       foodname: $("#foodname").val(),
       description: $("#description").val(),
-      is_finished: $("#is_finished :selected").val(),
+      is_finished: $("#is_finished").val(),
       date: $('#date').val(),
       price: $('#price').val()},
     headers: {"X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value},
