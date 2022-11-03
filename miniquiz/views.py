@@ -1,17 +1,21 @@
 from miniquiz.models import *
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from homepage.views import login_user
 
 # View main page to start quiz
 def show_quiz_homepage(request):
     quiz = QuizModel.objects.all()
     return render(request, 'main.html', {'quizs' : quiz})
 
+@login_required(login_url='/login/')
 # View quiz page to start the quiz
 def show_quiz_mainpage(request, pk):
     quiz = QuizModel.objects.get(pk = pk)
     return render(request, 'quiz.html', {'obj': quiz})
 
+@login_required(login_url='/login/')
 # View quiz questions and answers in json format
 def show_quiz_json(request, pk):
     quiz = QuizModel.objects.get(pk = pk)
@@ -34,10 +38,11 @@ def show_quiz_json(request, pk):
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
+@login_required(login_url='/login/')
 # Save the quiz and view the result
 def save_quiz(request, pk):
+    questions = []
     if is_ajax(request):
-        questions = []
         data = request.POST
         data_ = dict(data.lists())
 
