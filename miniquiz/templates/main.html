@@ -54,7 +54,11 @@
         <a href="{% url 'miniquiz:show-quiz-homepage' %}" class="nav-item nav-link">Quiz</a>
         <a href="{% url 'send_foodwaste:show_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
 
-        <button type="button" class="btn btn-outline"><a href="{url 'homepage:logout' %}"></a>Logout</button>
+        {% if user.is_authenticated %}
+            <button type="button" class="btn btn-outline"><a href="{% url 'homepage:logout' %}">Logout</a></button>
+            {% else %} 
+            <button type="button" class="btn btn-outline"><a href="{% url 'homepage:login' %}">Login</a></button>               
+            {% endif %}
       </div>
     </div>
     </div>
@@ -87,6 +91,8 @@
 <!-- Paragraph title -->
 <div class="h3" style="text-align: center;">Food Waste Awareness Mini Quiz</div>
 <hr>
+<div class="h5" style="text-align: center;">You need to login first!</div>
+
 
 <!-- Modal content -->
 {% for quiz in quizs %}
