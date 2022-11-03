@@ -1,11 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block meta %}
 <title>{{user}}'s food diary</title>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 <script>
   $(document).ready(function(){
     var count = 0;
@@ -34,10 +31,6 @@
       </div>
     </div>
   `;
-
-
-
-
   
   function show_food(){
     $.get("{% url 'diary:get_json' %}", function(log){
@@ -47,7 +40,6 @@
       });
     });
   };
-
   const remove_log = (log) => {
         $(`#${log.pk}`).click(function () {
           $.ajax({
@@ -59,8 +51,6 @@
           })
         })
       }
-
-
   console.log(count);
   const closeModal = e => {
             $('.modal').removeClass('in');
@@ -69,11 +59,8 @@
             $('.modal-backdrop').remove();
             $('body').removeClass('modal-open');
         };
-
   
-
   $("#createForm").submit((e) => {
-
     e.preventDefault()
     $.ajax({
       type: 'POST',
@@ -97,81 +84,74 @@
   show_food();
 });
   
-
 </script>
-
 {% endblock meta %}
-
 {% block content %}
-
 <head>
-
   <!-- NAVBAR START -->
-  <nav class="navbar sticky-top navbar-expand-lg navbar-light data-wow-delay container-fluid" style="position: fixed;" data-wow-delay="0.1s">
-    <div class="container">
-        <a href="{% url 'homepage:show_homepage' %}" class="navbar-brand ms-4 ms-lg-3">
-          <img src="{% static 'diary/foodybuddy.svg' %}" alt="Fooody">
-          <!-- <h1 class="fw-bold m-0" style="color:#FF9437">F<span style="color:#333">ooo</span>dy</h1> -->
-        </a>
-    
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dropdownMenuOffset"
-          aria-controls="dropdownMenuOffset" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" style="background-color:white;" id="dropdownMenuOffset">
-    
-          <div class="navbar-nav ms-auto px-4 p-lg-0">
-            <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link active fw-bold"
-              style="color:#F68829">Home</a>
-    
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Tracker &nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                </svg>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'diary:show_diary' %}">Food Diary</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
-              </ul>
-            </li>
-    
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" >
-                Information&nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                  <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                </svg>
-              </a>
-    
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'tips:show_tips_article' %}">Articles</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'organization:show_organization' %}">Food Waste Organizations</a></li>
-              </ul>
-            </li>
-    
-            <a href="{% url 'miniquiz:show-quiz-homepage' %}" class="nav-item nav-link">Quiz</a>
-            
-            <a href="{% url 'send_foodwaste:show_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
-    
-            <button type="button" class="btn btn-outline"><a href="{%url 'homepage:logout' %}">Logout</a></button>
-          </div>
-        </div>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light data-wow-delay container-fluid" style="position: fixed;" data-wow-delay="0.1s">
+  <div class="container">
+      <a href="{% url 'homepage:show_homepage' %}" class="navbar-brand ms-4 ms-lg-3">
+        <img src="{% static 'diary/foodybuddy.svg' %}" alt="Fooody">
+        <!-- <h1 class="fw-bold m-0" style="color:#FF9437">F<span style="color:#333">ooo</span>dy</h1> -->
+      </a>
+  
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dropdownMenuOffset"
+        aria-controls="dropdownMenuOffset" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" style="background-color:white;" id="dropdownMenuOffset">
+  
+        <div class="navbar-nav ms-auto px-4 p-lg-0">
+          <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link active fw-bold"
+            style="color:#F68829">Home</a>
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              Tracker &nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'diary:show_diary' %}">Food Diary</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
+            </ul>
+          </li>
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" >
+              Information&nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </a>
+  
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'tips:show_tips_article' %}">Articles</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'organization:show_organization' %}">Food Waste Organizations</a></li>
+            </ul>
+          </li>
+  
+          <a href="{% url 'miniquiz:show-quiz-homepage' %}" class="nav-item nav-link">Quiz</a>
+          
+          <a href="{% url 'send_foodwaste:show_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
+  
+          <button type="button" class="btn btn-outline"><a href="{%url 'homepage:logout' %}">Logout</a></button>
         </div>
       </div>
-    </nav>
-      <!-- NAVBAR -->
-
+      </div>
+    </div>
+  </nav>
+    <!-- NAVBAR -->
 </head>
-
 <body>
   <section class="d-flex justify-content-center overflow-auto" id="decoration">
     <div id="header-bg"></div>
@@ -181,7 +161,6 @@
     <p class="subheading">stay on track, stay conscious</p>
     <h1 class="heading">fooody diary</h1>
   </section>
-
   <section class="d-flex justify-content-center">
     <div id="notification-bar" class="container-md-100">
       <div class="d-flex justify-content-center">
@@ -202,49 +181,37 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
-
   <section  id="mainBody" class="container-md h-100 d-flex flex-wrap justify-content-center align-items-center">
     
   </section>
   
-
-
   <!-- MODAL -->
   <div class="modal fade bg-modal-fade" id="myModal" data-keyboard="false" tabindex="-1" aria-labelledby="myModal"
     aria-hidden="true">
-
     <div class="modal-dialog modal-dialog-centered px-3">
-
       <div class="modal-content p-5 text-center" style="border:1px solid #000; box-shadow: 10px 10px 0px #000000;
     border-radius: 15px;">
-
         <button type="button" class="btn-close mb-3" data-dismiss="modal" aria-label="Close"></button>
         <!-- FORM -->
         <div class="container-md-100">
           <form method="POST" id="createForm">
-
             {% csrf_token %}
             <h3 class="fw-bold m-3" style="color:#333">makan apa, <span style="color:#F68829">{{user}}</span>?</h3>
             <div class="mb-md-3">
-
               <div class="form mb-3">
                 <input type="text" name="foodname" id="foodname" placeholder="Nama makanan/minuman" class="form-control"
                   style="border: 1px solid #000" required>
               </div>
-
               <div class="form mb-3">
                 <input type="date" type="text" id="date" onfocus="(this.type='date')" onblur="(this.type='text')" name="date" placeholder="Tanggal" class="form-control"
                   style="border: 1px solid #000" required>
               </div>
-
               <div class="form mb-3">
                 <textarea type="text" name="description" id="description" placeholder="Deskripsi" class="form-control"
                   style="border: 1px solid #000" required></textarea>
               </div>
-
               <div class="form mb-3">
                 <input type="text" name="price" id="price" placeholder="Berapa harganya?" class="form-control"
                   style="border: 1px solid #000" required>
@@ -271,18 +238,14 @@
         <!-- FORM -->
       </div>
     </div>
-
       <script>
      
       </script>
-
 </body>
-
 <style>
 .dropdown-toggle::after {
     display: none;
 }
-
 #mainBody {
   top: 620px;
   position: relative;
@@ -299,7 +262,6 @@
   margin-left:20px; 
   
 }
-
   #notification-bar {
     background-color: white;
     padding: 30px;
@@ -312,7 +274,6 @@
     position: absolute;
     margin-bottom: 50px;
   }
-
   .heading {
     position: absolute;
     color: #333333;
@@ -322,7 +283,6 @@
     text-decoration: underline;
     z-index: -1;
   }
-
   .subheading {
     color: #333333;
     font-size: 18px;
@@ -330,9 +290,7 @@
     top: 207px;
     z-index: -1;
     line-height: 1px;
-
   }
-
   #header-bg {
     width: 100%;
     height: 326px;
@@ -343,7 +301,6 @@
     position: fixed;
     border-bottom: 1px solid black;
   }
-
   .plate {
     box-sizing: border-box;
     position: fixed;
@@ -351,9 +308,7 @@
     overflow-x: hidden;
     
   }
-
   @media (min-width: 720px) {
-
     #notification-bar {
       background-color: white;
       padding: 30px;
@@ -364,9 +319,7 @@
       box-shadow: 10px 10px 0px #000000;
       border-radius: 15px;
       margin-bottom: 50px;
-
     }
-
     .plate {
     box-sizing: border-box;
     position: absolute;
@@ -376,7 +329,6 @@
   }
   
   }
-
   #outerplate {
     width: 624px;
     height: 624px;
@@ -386,7 +338,6 @@
     box-shadow: 8px 8px 0px #000000;
     z-index: -4;
   }
-
   #plateshadow {
     width: 501.86px;
     height: 501.86px;
@@ -395,7 +346,6 @@
     border: 1px solid #000000;
     z-index: -3;
   }
-
   #innerplate {
     width: 485.39px;
     height: 485.39px;
@@ -406,5 +356,4 @@
     z-index: -2;
   }
 </style>
-
 {% endblock content %}

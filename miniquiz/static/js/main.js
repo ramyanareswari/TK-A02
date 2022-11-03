@@ -1,51 +1,38 @@
-//make sure window is loaded
+// Make sure if window is loaded
 window.onload = function () {
-
     console.log('hello world')
 
-    const modalBtns = [...document.getElementsByClassName('modal-button')];
-    const modalBody = document.getElementById('modal-body-confirm');
-    const startBtn = document.getElementById('start-button');
-    const goback1 = document.getElementById("goback1");
-    const goback2 = document.getElementById("goback2");
-    const url = window.location.href;
+    // Initialize variables
+    const modalBtns = [...document.getElementsByClassName('modal-button')]
+    const modalBody = document.getElementById('modal-body-confirm')
+    const startBtn = document.getElementById('start-button')
+    const url = window.location.href
 
-    // Listener in Goback Button
-    if(goback1 != null) {
-        goback1.addEventListener('click', ()=> {
-        window.location.href = '/';
+    // Modal content
+    modalBtns.forEach(modalBtn=> modalBtn.addEventListener('click', ()=>{
+        // Initialize variables
+        const name = modalBtn.getAttribute('data-quiz')
+        const numQuestions = modalBtn.getAttribute('data-questions')
+        const scoreToPass = modalBtn.getAttribute('data-pass')
+        const time = modalBtn.getAttribute('data-time')
+
+        // Content in modal body
+        modalBody.innerHTML = `
+            <div class="h5 mb-3">Are you ready to begin "<b>${name}</b>"?</div>
+            <div class="text-muted">
+                <ul>
+                    <li>number of questions: <b>${numQuestions}</b></li>
+                    <li>score to pass: <b>${scoreToPass}%</b></li>
+                    <li>time: <b>${time} min</b></li>
+                </ul>
+            </div>
+        `
+
+        // Click to start quiz in modal
+        startBtn.addEventListener('click', ()=>{
+            window.location.href = url + pk
         })
-    }
-
-    // Listener for GoBack Button
-    if(goback2 != null){
-        goback2.addEventListener('click', ()=> {
-        window.location.href = '/mini-quiz/';
-        })
-    }
-
-    modalBtns.forEach((modalBtn) => 
-        modalBtn.addEventListener('click', () => {
-            const pk = modalBtn.getAttribute("data-pk");
-            const name = modalBtn.getAttribute('data-quiz');
-            const numOfQuestions = modalBtn.getAttribute('data-questions');
-            const scoreToPass = modalBtn.getAttribute('data-pass');
-            const time = modalBtn.getAttribute('data-time');
-            const action = modalBtn.getAttribute("data-action");
-
-            // Add this html tag to modalBody
-            modalBody.innerHTML = `
-                            <div class="header-text-muted h10 mb-3">Are you sure want to begin <b>"${name}"</b>?</div>
-                            <div class=text-muted>
-                                <ul>
-                                    <li>Test Name : ${name}</li>
-                                    <li>Number of Question : ${numOfQuestions}</li>
-                                    <li>Duration : ${time} min</li>
-                                </ul>
-                            </div>`;
-
-            startBtn.addEventListener('click', ()=> {
-                window.location.href =  url + pk;
-            });
-    })
-)}
+    
+    }))
+    
+}
