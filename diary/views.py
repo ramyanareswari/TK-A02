@@ -9,8 +9,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 @login_required(login_url='/login/')
 def show_diary(request):
+    res = 0
+    for data in Diary.objects.filter(user=request.user):
+       res += data.price
     context = {
         'user': request.user,
+        'res' : res
     }
     return render(request, 'diary.html', context)
 
@@ -19,12 +23,6 @@ def show_diary(request):
 def create_log(request):
     val = True
     if request.method == 'POST':
-        a = request.POST.get('is_finished')
-        if a == "True":
-            val = True
-        elif a == "False":
-            val = False
-        print(a)
         foodname = request.POST.get('foodname')
         description = request.POST.get('description')
         date = request.POST.get('date')
@@ -36,7 +34,7 @@ def create_log(request):
             foodname=foodname,
             description=description,
             date=date,
-            is_finished = val,
+            is_finished = False,
             price=price)
             
         return JsonResponse(
@@ -62,4 +60,11 @@ def get_diarylog_json(request):
 def delete_log(request, pk):
     if Diary.objects.get(pk = pk).user == request.user:
         Diary.objects.filter(pk = pk).delete()
+    return redirect('diary:show_diary')
+
+@login_required(login_url='/login/')
+def update_log(request, id):
+    log = Diary.objects.get(user=request.user, id=id)
+    log.is_finished = not log.is_finished
+    log.save()
     return redirect('diary:show_diary')
