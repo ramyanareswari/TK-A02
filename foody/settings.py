@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     "tips",
     "send_foodwaste",
     "organization",
-    
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
