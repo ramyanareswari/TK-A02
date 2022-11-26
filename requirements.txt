@@ -5,6 +5,7 @@ certifi==2022.9.24
 cffi==1.15.0
 charset-normalizer==2.1.1
 chromedriver==2.24.1
+django-cors-headers==3.13.0
 cryptography==36.0.1
 dj-database-url==1.0.0
 Django==4.1.2
