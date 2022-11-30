@@ -3,7 +3,9 @@
 ## App Link
 Karena free-tier Heroku habis mulai 28 November 2022, aplikasi dimigrasi ke platform Railway. Aplikasi dapat diakses [di sini!](https://fooodybuddy.up.railway.app/)
 
-Repo github yang baru untuk aplikasi railway dapat diakses [di sini!](https://fooodybuddy.up.railway.app/)
+Repo github yang baru untuk aplikasi railway dapat diakses [di sini!](https://github.com/ramyanareswari/foody-railway)
+
+Repo untuk mobile app dapat diakses [di sini!](https://github.com/ramyanareswari/fooody-mobile-app)
 
 ## Members
 __PBP-A Odd Semester 2022/2023__<br/>
