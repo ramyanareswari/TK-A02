@@ -6,6 +6,66 @@
 {% endblock meta %}
 
 {% block content %}
+
+<!-- NAVBAR -->
+<nav class="navbar sticky-top navbar-expand-lg navbar-light py-lg-3 px-lg-2 data-wow-delay" data-wow-delay="0.1s">
+
+    <a href="{% url 'homepage:show_homepage' %}" class="navbar-brand ms-4 ms-lg-3">
+      <img src="{% static 'diary/foodybuddy.svg' %}" alt="Fooody">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dropdownMenuOffset"
+      aria-controls="dropdownMenuOffset" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse px-lg-2 " style="background-color:white;" id="dropdownMenuOffset">
+
+      <div class="navbar-nav ms-auto px-4 p-lg-0">
+        <a href="{% url 'homepage:show_homepage' %}" class="nav-item nav-link active fw-bold"
+          style="color:#F68829">Home</a>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tracker
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'diary:show_diary' %}">Food Diary</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'expiry:show_expiry' %}">Expiration Tracker</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Information
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'tips:show_tips_article' %}">Articles</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'homepage:show_homepage' %}">Food Waste Organizations</a></li>
+          </ul>
+        </li>
+
+        <a href="{% url 'miniquiz:show-quiz-homepage' %}" class="nav-item nav-link">Quiz</a>
+        <a href="{% url 'send_foodwaste:show_foodwaste' %}" class="nav-item nav-link">Send Food Waste</a>
+
+        {% if user.is_authenticated %}
+            <button type="button" class="btn btn-outline"><a href="{% url 'homepage:logout' %}">Logout</a></button>
+            {% else %} 
+            <button type="button" class="btn btn-outline"><a href="{% url 'homepage:login' %}">Login</a></button>               
+            {% endif %}
+      </div>
+    </div>
+    </div>
+  </nav>
+  <!-- NAVBAR -->
+
 <div class="main-content">
     <div class="content">
         <div class="rows">
